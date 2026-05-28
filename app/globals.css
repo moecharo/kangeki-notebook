@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Yomogi&display=swap');
 @import "tailwindcss";
 
 :root {
@@ -19,10 +19,12 @@
 
 * { box-sizing: border-box; }
 
+html { font-size: 20px; }
+
 html, body {
   background-color: var(--cream);
   color: var(--text-main);
-  font-family: 'Klee One', 'Hiragino Kaku Gothic ProN', 'メイリオ', sans-serif;
+  font-family: 'Yomogi', 'Hiragino Kaku Gothic ProN', 'メイリオ', sans-serif;
   min-height: 100vh;
 }
 
@@ -172,7 +174,7 @@ textarea.input-field { resize: vertical; min-height: 80px; }
 /* ── FAB ── */
 .fab {
   position: fixed;
-  bottom: 24px;
+  bottom: 62px;
   right: 24px;
   width: 56px;
   height: 56px;

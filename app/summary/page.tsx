@@ -68,12 +68,12 @@ export default function SummaryPage() {
   const chartOptions = {
     responsive: true,
     plugins: {
-      legend: { position: 'bottom' as const, labels: { font: { family: 'Klee One' }, color: '#5c3d1e' } },
+      legend: { position: 'bottom' as const, labels: { font: { family: 'Yomogi' }, color: '#5c3d1e' } },
       title: { display: false },
     },
     scales: {
-      x: { stacked: true, ticks: { color: '#8b7355', font: { family: 'Klee One' } }, grid: { color: 'rgba(201,170,133,0.2)' } },
-      y: { stacked: true, ticks: { color: '#8b7355', stepSize: 1, font: { family: 'Klee One' } }, grid: { color: 'rgba(201,170,133,0.2)' } },
+      x: { stacked: true, ticks: { color: '#8b7355', font: { family: 'Yomogi' } }, grid: { color: 'rgba(201,170,133,0.2)' } },
+      y: { stacked: true, ticks: { color: '#8b7355', stepSize: 1, font: { family: 'Yomogi' } }, grid: { color: 'rgba(201,170,133,0.2)' } },
     },
   };
 
