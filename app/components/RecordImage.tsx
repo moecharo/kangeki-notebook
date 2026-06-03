@@ -16,10 +16,17 @@ interface Props {
   className?: string;
 }
 
+function isHttpUrl(url: string): boolean {
+  try {
+    const { protocol } = new URL(url);
+    return protocol === 'https:' || protocol === 'http:';
+  } catch { return false; }
+}
+
 export default function RecordImage({ imageUrl, category, width = 80, height = 112, className = '' }: Props) {
   const [imgError, setImgError] = useState(false);
 
-  if (imageUrl && !imgError) {
+  if (imageUrl && !imgError && isHttpUrl(imageUrl)) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img

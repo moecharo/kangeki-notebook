@@ -55,7 +55,7 @@ export default function RecordForm({ initial }: Props) {
 
   // ── TMDB検索 ──
   const handleTmdbSearch = useCallback(async () => {
-    if (!apiKey) { setTmdbError('設定画面でAPIキーを登録してください'); return; }
+    if (!apiKey) { setTmdbError('設定画面でアクセストークンを登録してください'); return; }
     if (!tmdbQuery.trim()) return;
     setTmdbLoading(true);
     setTmdbError('');
@@ -64,7 +64,7 @@ export default function RecordForm({ initial }: Props) {
       setTmdbResults(results.slice(0, 8));
       if (results.length === 0) setTmdbError('検索結果が見つかりませんでした');
     } catch {
-      setTmdbError('TMDB検索に失敗しました。APIキーを確認してください');
+      setTmdbError('TMDB検索に失敗しました。アクセストークンを確認してください');
     } finally {
       setTmdbLoading(false);
     }
@@ -128,19 +128,29 @@ export default function RecordForm({ initial }: Props) {
     const errs: Record<string, string> = {};
     if (!form.title.trim()) errs.title = 'タイトルは必須です';
     if (!form.watchedDate) errs.watchedDate = '見た日付は必須です';
+    const imageUrlTrimmed = form.imageUrl.trim();
+    if (imageUrlTrimmed) {
+      try {
+        const { protocol } = new URL(imageUrlTrimmed);
+        if (protocol !== 'https:' && protocol !== 'http:') errs.imageUrl = '画像URLはhttps://で始まるURLを指定してください';
+      } catch {
+        errs.imageUrl = '画像URLの形式が正しくありません';
+      }
+    }
     if (Object.keys(errs).length) { setErrors(errs); return; }
 
+    const ticketPriceRaw = parseInt(form.ticketPrice, 10);
     const data = {
       title: form.title.trim(),
       category: form.category,
       watchedDate: form.watchedDate,
-      imageUrl: form.imageUrl.trim() || null,
+      imageUrl: imageUrlTrimmed || null,
       staffNames: form.staffNames.map(s => s.trim()).filter(Boolean),
       castNames: form.castNames.map(c => c.trim()).filter(Boolean),
       venue: form.venue.trim() || null,
       tags: form.tags,
       review: form.review.trim() || null,
-      ticketPrice: form.ticketPrice !== '' ? parseInt(form.ticketPrice, 10) : null,
+      ticketPrice: form.ticketPrice !== '' && !isNaN(ticketPriceRaw) ? ticketPriceRaw : null,
     };
 
     if (initial) {
@@ -189,7 +199,7 @@ export default function RecordForm({ initial }: Props) {
           <span className="field-label">🔍 映画を検索して自動入力（TMDB）</span>
           {!apiKey && (
             <p style={{ fontSize: '0.8rem', color: 'var(--accent-red)', marginBottom: '6px' }}>
-              ⚠ APIキーが未設定です。<a href="/settings" style={{ color: 'var(--accent-blue)' }}>設定画面</a>から登録してください
+              ⚠ アクセストークンが未設定です。<a href="/settings" style={{ color: 'var(--accent-blue)' }}>設定画面</a>から登録してください
             </p>
           )}
           <div className="flex gap-2 mb-2">
@@ -278,6 +288,7 @@ export default function RecordForm({ initial }: Props) {
           value={form.imageUrl}
           onChange={e => setForm(f => ({ ...f, imageUrl: e.target.value }))}
         />
+        {errors.imageUrl && <p style={{ fontSize: '0.78rem', color: 'var(--accent-red)', marginTop: '2px' }}>{errors.imageUrl}</p>}
       </div>
 
       {/* 推しスタッフ */}

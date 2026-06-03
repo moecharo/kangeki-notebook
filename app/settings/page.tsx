@@ -37,7 +37,7 @@ export default function SettingsPage() {
 
       <div className="card p-4 mb-4">
         <h2 style={{ fontWeight: 600, fontSize: '0.95rem', color: 'var(--brown)', marginBottom: '12px' }}>
-          TMDB APIキー
+          TMDBアクセストークン
         </h2>
 
         <div style={{
@@ -47,22 +47,22 @@ export default function SettingsPage() {
           fontSize: '0.82rem',
           color: apiKey ? 'var(--accent-green)' : 'var(--accent-red)',
         }}>
-          {apiKey ? '✅ APIキーが設定されています。映画の自動検索が使用できます。' : '⚠ APIキーが未設定です。映画の自動検索を使うには登録が必要です。'}
+          {apiKey ? '✅ アクセストークンが設定されています。映画の自動検索が使用できます。' : '⚠ アクセストークンが未設定です。映画の自動検索を使うには登録が必要です。'}
         </div>
 
         <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '12px', lineHeight: 1.6 }}>
-          TMDB（The Movie Database）のAPIキーを入力してください。
-          APIキーは <a href="https://www.themoviedb.org/settings/api" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-blue)' }}>TMDB公式サイト</a> で無料取得できます。
-          キーはこのブラウザのlocalStorageにのみ保存され、外部には送信されません。
+          TMDB（The Movie Database）のAPIアクセストークン（v4）を入力してください。
+          <a href="https://www.themoviedb.org/settings/api" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-blue)' }}>TMDB公式サイト</a> の「APIアクセストークン（読み取りアクセス）」欄にある長いトークン文字列を使用してください（「APIキー」とは異なります）。
+          トークンはこのブラウザのlocalStorageにのみ保存され、外部には送信されません。
         </p>
 
-        <label className="field-label" htmlFor="apikey">APIキー</label>
+        <label className="field-label" htmlFor="apikey">APIアクセストークン</label>
         <div className="flex gap-2 mb-3">
           <input
             id="apikey"
             type={showKey ? 'text' : 'password'}
             className="input-field"
-            placeholder="TMDBのAPIキーを入力..."
+            placeholder="TMDBのAPIアクセストークン（v4）を入力..."
             value={inputKey}
             onChange={e => setInputKey(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && handleSave()}
